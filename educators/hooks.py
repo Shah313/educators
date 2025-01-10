@@ -69,7 +69,7 @@ app_license = "mit"
 
 # before_install = "educators.install.before_install"
 # after_install = "educators.install.after_install"
-  after_install = "educators.install.after_install"
+after_install = "educators.install.after_install"
 
 # Uninstallation
 # ------------
