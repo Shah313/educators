@@ -11,7 +11,7 @@ def after_install():
 
     
 def get_custom_fields():
-	"""Education specific custom fields that needs to be added to the Sales Invoice DocType."""
+	"""Education specific custom fields that needs to be added to the Sales Invoice DocType & Quotation Doctype."""
 	return {
 		"Sales Invoice": [
 			{
@@ -21,5 +21,18 @@ def get_custom_fields():
 				"options": "Student",
 				"insert_after": "naming_series",
 			},
-        ]
-    }
+        ],
+      "Quotation": [
+    {
+        "fieldname": "custom_order_type",
+        "fieldtype": "Select",
+        "label": "Order Type",
+        "options": "Property Sell\nProperty Rent\nProperty Maintenance\nSales\nMaintenance\nShopping Cart",
+        "insert_after": "column_break1",
+		"default": "Property Sell",
+        "reqd": 1,
+        "print_hide": 1,
+        "in_standard_filter": 1
+    },
+  ],
+ }
