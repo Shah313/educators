@@ -4,12 +4,12 @@ from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 def after_install():
     # Add custom fields defined in get_custom_fields
     create_custom_fields(get_custom_fields())
-    
+
     # Update order_type options in Quotation
-    create_custom_fields(update_quotation_order_type())
+    update_quotation_order_type()
 
 def get_custom_fields():
-    """Define custom fields for Sales Invoice and Quotation doctypes."""
+    """Define custom fields for Sales Invoice and other doctypes."""
     return {
         "Sales Invoice": [
             {
@@ -28,17 +28,14 @@ def update_quotation_order_type():
         doc = frappe.get_doc('DocType', 'Quotation')
         for field in doc.fields:
             if field.fieldname == 'order_type':
-                
-                current_options = field.options.split('\n')
-                
-                
+                # Get current options or set empty list if none exist
+                current_options = field.options.split('\n') if field.options else []
+                # Define new options
                 new_options = ['Rent', 'Property Sell', 'Property Maintenance']
-                
-               
+                # Merge options and remove duplicates
                 updated_options = list(set(current_options + new_options))
-                
-              
+                # Update the field options
                 field.options = '\n'.join(updated_options)
                 doc.save()
-
+                # Clear cache to reflect changes
                 frappe.clear_cache(doctype='Quotation')
